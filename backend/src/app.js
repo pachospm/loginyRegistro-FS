@@ -3,7 +3,7 @@ const cors = require("cors")
 // Importar Express para crear la API REST
 const express = require("express")
 // Importar las rutas de autenticación
-//const authRoutes = require("./routes/authRoute")
+const authRoutes = require("./routes/authRoute")
 
 //Crear la aplicación Express
 const app = express();
@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 // Ejemplo: Get /users/me
 
 //app.use("/users", userRoutes)
+app.use("/auth", authRoutes)
 
 app.use((req, res) => {
     res.status(404).json({message: "Ruta no encontrada"});
