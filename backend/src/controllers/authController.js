@@ -88,4 +88,50 @@ async function register(req, res){
 
 // Controlador para POST /auth/login
 
-module.exports = {register}
+async function login(req, res) {
+  try {
+    const { email, password } = req.body;
+    const validationError = validateLoginInput(email, password);
+
+    if (validationError) {
+      return res.status(400).json({ message: validationError });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const result = await pool.query(
+      "SELECT id, name, email, password_hash FROM users WHERE email = $1",
+      [normalizedEmail]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(401).json({ message: "Credenciales incorrectas." });
+    }
+
+    const user = result.rows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Credenciales incorrectas." });
+    }
+
+    const token = createToken(user);
+
+    return res.json({
+      message: "Login exitoso",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    console.error("Error en login:", error);
+    return res.status(500).json({ message: "Ocurrio un error inesperado." });
+  }
+}
+
+module.exports = {
+  register,
+  login
+};
