@@ -1,0 +1,3 @@
+package com.applogin.loginyregistro.authapp.data.remote.dto
+
+data class LoginRequestDto()
