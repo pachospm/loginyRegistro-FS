@@ -169,3 +169,4 @@ El proyecto incluye el flujo funcional completo de autenticacion:
 ## Autor
 
 Proyecto academico desarrollado como practica full stack Android + API REST.
+Mg Francisco Javier Samacá Piñeros.
