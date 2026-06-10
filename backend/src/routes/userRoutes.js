@@ -1,15 +1,9 @@
 const express = require("express");
+const { getMe } = require("../controllers/userController");
+const authMiddleware = require("../middleware/authMiddleware");
 
-// Importar el controlador que devuelve el perfil autentiación
-const {getMe} = require("../controllers/userController");
-
-// Importar el middleware que valida el token JWT
-const authMiddleware = require("../middlewares/authMiddleware");
-
-// Crear un router para rutas relacionadas con usuario
 const router = express.Router();
 
-// Definir la ruta del perfil de autenticación
 router.get("/me", authMiddleware, getMe);
 
-module.exports = router
+module.exports = router;

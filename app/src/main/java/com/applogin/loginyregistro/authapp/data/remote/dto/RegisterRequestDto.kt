@@ -1,3 +1,7 @@
 package com.applogin.loginyregistro.authapp.data.remote.dto
 
-data class RegisterRequestDto()
+data class RegisterRequestDto(
+    val name: String,
+    val email: String,
+    val password: String
+)
